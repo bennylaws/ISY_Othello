@@ -16,6 +16,7 @@ import spieler.OthelloSpieler;
 public class OthelloWettkamp {
 	
 	/// HATE GIT !!! ///
+	/// I REALLY DO NOW ///
 
     public static void main(String[] args) {
         /* Es muss ein OthelloArena-Objekt erzeugt
