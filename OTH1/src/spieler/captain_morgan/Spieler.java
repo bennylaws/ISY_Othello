@@ -41,6 +41,7 @@ public class Spieler implements OthelloSpieler {
         // (-1, -1) bedeutet "Passen" --> wird returned, falls kein gültiges Feld gefunden wird
         Zug ownMove = new Zug(-1, -1);
         
+        //possibleMoves auslagern, damit wir von anderswo geschmeidig Zugriff drauf haben.
         possibleMoves.clear();      // lösche Zuege der letzten Runde
         
         for (int row = 0; row < Feld.ROWMAX; row++)         // Durchlaufe komplettes Spielfeld und teste auf validen Zug
