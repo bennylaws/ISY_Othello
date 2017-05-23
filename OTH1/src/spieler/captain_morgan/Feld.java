@@ -6,7 +6,7 @@
 package spieler.captain_morgan;
 
 /**
- *
+ * Bücher und Fleiß, es gibt viel wichtigere Dinge, wie Freundschaft und Tapferkeit! und Harry? Achte bitte auf dich. 
  * @author ben
  */
 class Feld {
