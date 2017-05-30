@@ -6,6 +6,7 @@
 package spieler.captain_morgan;
 
 import java.util.ArrayList;
+
 import spieler.Farbe;
 import spieler.OthelloSpieler;
 import spieler.Zug;
@@ -18,7 +19,7 @@ import spieler.ZugException;
 public class Spieler implements OthelloSpieler {
     
     int ownColor = -1, opponentColor = 1;    // -1 == black, 1 == white
-    static Feld feld;
+    Feld feld;
     
     // Liste für mögliche Zuege ( fuerrandom Auswahl)
     ArrayList <Zug> possibleMoves = new ArrayList<>();
@@ -35,11 +36,18 @@ public class Spieler implements OthelloSpieler {
             Test.turnAround(lastMove.getZeile(), lastMove.getSpalte(), opponentColor, ownColor);
         }
         
-        Print.out();        // Feld nach Gegner move ausdrucken
+//        Print.out();        // Feld nach Gegner move ausdrucken
         
         // Zug fuer die Rueckgabe an Priemer erstellen
         // (-1, -1) bedeutet "Passen" --> wird returned, falls kein gültiges Feld gefunden wird
-        Zug ownMove = new Zug(-1, -1);
+        Zug ownMove;
+        
+        /////////////////////////////////////////////////
+
+        GameTree gt = new GameTree(feld);
+        ownMove = gt.getBestMove();
+        
+        /////////////////////////////////////////////////
         
         // hier eigene Chips umdrehen
         if (ownMove.getSpalte() != -1) {                                                        // wenn nicht -1 --> wenn nicht gepasst wird

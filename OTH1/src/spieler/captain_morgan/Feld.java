@@ -88,4 +88,16 @@ class Feld {
     	
     }
     
+    public Feld returnCopy() {
+    	
+    	Feld f = new Feld();
+    	
+    	for (int row = 0; row < ROWMAX; row++)
+    		for (int col = 0; col < COLMAX; col++)
+    			f.setField(row, col, this.getField(row, col));
+    	
+    	return f;
+    	
+    }
+    
 }
