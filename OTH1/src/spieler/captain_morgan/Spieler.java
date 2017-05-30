@@ -18,12 +18,21 @@ import spieler.ZugException;
  */
 public class Spieler implements OthelloSpieler {
     
-    int ownColor = -1, opponentColor = 1;    // -1 == black, 1 == white
-    Feld feld;
+    static int ownColor = -1, opponentColor = 1;    // -1 == black, 1 == white
+    int suchTiefe;
+    static Feld feld;
     
     // Liste für mögliche Zuege ( fuerrandom Auswahl)
     ArrayList <Zug> possibleMoves = new ArrayList<>();
 
+    public Spieler () {
+    	this.suchTiefe = 9;
+    }
+    
+    public Spieler(int Suchtiefe) {
+    	this.suchTiefe = suchTiefe;
+    }
+    
     @Override
     public Zug berechneZug(Zug lastMove, long f, long l1) throws ZugException {
 
@@ -44,7 +53,8 @@ public class Spieler implements OthelloSpieler {
         
         /////////////////////////////////////////////////
 
-        GameTree gt = new GameTree(feld);
+        Feld feldCopy = feld.returnCopy();
+        GameTree gt = new GameTree(feldCopy, suchTiefe);
         ownMove = gt.getBestMove();
         
         /////////////////////////////////////////////////
@@ -55,7 +65,7 @@ public class Spieler implements OthelloSpieler {
             Test.turnAround(ownMove.getZeile(), ownMove.getSpalte(), ownColor, opponentColor);  // und dann werden Steine zu unseren Gunsten gedreht
             
         }
-        Print.out();        // Feld nach eigenem move ausdrucken
+//        Print.out();        // Feld nach eigenem move ausdrucken
         return ownMove;     // Rückgabe unseres Zuges an Priemers Spielrahmen (an den prima Spielrahmen  =) )
     }
 

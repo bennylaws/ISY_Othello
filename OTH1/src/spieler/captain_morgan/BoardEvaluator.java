@@ -38,18 +38,13 @@ public class BoardEvaluator {
 		
 		int ret = 0;
 		for(int i = 0; i < 8 ; i++)
-		{
 			for(int j = 0; j < 8; j++)
-			{
-				if(boardToEval.getField(i, j) == testColor)
-				{
+				if (boardToEval.getField(i, j) == testColor)
 					ret += evaluationMatrix[i][j];
-				}
-				else if(boardToEval.getField(i, j) == oppColor)
+
+				else if (boardToEval.getField(i, j) == oppColor)
 					ret -= evaluationMatrix[i][j];
-			}
-		}
-		
+
 		return ret;
 	};
 
