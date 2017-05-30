@@ -31,6 +31,9 @@ public class BoardEvaluator {
 		{50, -1, 3, 3, 3, 3, -1, 50}
 	};
 	
+	//Gibt zunächst die Summe aller belegten Felder in Abhängigkeit von der Steinfarbe zurück
+	//Hinzuzufügen ist noch eine Einschätzung der Flexibilität der Boardposition anhand der möglichen Züge
+	//des Gegners und des aktiven Spielers
 	static public int getBoardValue(Feld boardToEval,int testColor, int oppColor){
 		
 		int ret = 0;
