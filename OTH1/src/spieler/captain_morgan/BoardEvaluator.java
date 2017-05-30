@@ -20,4 +20,6 @@ package spieler.captain_morgan;
  */
 public class BoardEvaluator {
 
+	
+	
 }

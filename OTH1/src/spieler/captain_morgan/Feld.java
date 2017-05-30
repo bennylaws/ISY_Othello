@@ -5,8 +5,12 @@
  */
 package spieler.captain_morgan;
 
+import java.util.ArrayList;
+
+import spieler.Zug;
+
 /**
- * Bücher und Fleiß, es gibt viel wichtigere Dinge, wie Freundschaft und Tapferkeit! und Harry? Achte bitte auf dich. 
+ * Bï¿½cher und Fleiï¿½, es gibt viel wichtigere Dinge, wie Freundschaft und Tapferkeit! und Harry? Achte bitte auf dich. 
  * @author ben
  */
 class Feld {
@@ -19,8 +23,6 @@ class Feld {
     public Feld() {
         arr = new int[ROWMAX][COLMAX];      // 8 x 8 Spielfeld-Array "arr"
     }
-    //Kommentar by Thomas
-    //again
  
     /**
      * Ein Feld auslesen
@@ -72,4 +74,18 @@ class Feld {
         arr[3][4] = Feld.BLACK; // schwarz
         arr[4][3] = Feld.BLACK; // schwarz
     }
+    
+    public ArrayList<Zug> getAllPossibleMoves(int activePlayingColor, int opponentColor) {
+    	
+    	ArrayList<Zug> returnList = new ArrayList<>();
+    	
+    	for (int row = 0; row < Feld.ROWMAX; row++)         // Durchlaufe komplettes Spielfeld und teste auf validen Zug
+            for (int col = 0; col < Feld.COLMAX; col++)
+                if (Test.isValid(row, col, activePlayingColor, opponentColor))
+                    returnList.add(new Zug(row, col));   // fuege alle gefundenen validen Zuege der Liste hinzu	
+    	
+    	return returnList;
+    	
+    }
+    
 }
