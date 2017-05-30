@@ -28,8 +28,9 @@ public class GameTree {
 		for (Zug z : root.possibleMoves) {
 			root.addChild(this.root, z);
 		}
+		System.out.println(root.value);
 		
-System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children.size());
+//System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children.size());
 
 	}
 	
@@ -41,7 +42,7 @@ System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children
 		Zug zug = null;
 		Node parent;
 		
-		int alpha, beta, value;			// minimax / alpha beta
+		int alpha, beta, value = 0;			// minimax / alpha beta
 		
 		ArrayList<Zug> possibleMoves;
 		ArrayList<Node> children;
@@ -75,8 +76,10 @@ System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children
 				n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);
 			}
 			
-			if (suchTiefe <= 0)
+			if (suchTiefe <= 0) {
+				parent.value = BoardEvaluator.getBoardValue(n.tmpFeld, Spieler.ownColor, Spieler.opponentColor);
 				return;
+			}
 			
 			this.children.add(n);
 
@@ -86,11 +89,21 @@ System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
 			for (Node childNode : n.children)
 				for (Zug zug : childNode.possibleMoves)
 					childNode.addChild(childNode, zug);
+// HIER FEHLER fuck u rekursion			
+			if (parent != null) {
+				if (n.isMax && parent.value < n.value)
+					parent.value = n.value;
+				
+				else if (!n.isMax && parent.value > n.value)
+					parent.value = n.value;
+			}
 		}
 	}
 	
 	// hier noch die Bewertungsfunktion versklaven!
 	public Zug getBestMove() {
+		
+		// Baum traversieren und Ergebnisse bewerten lassen, dann im Baum hochreichen --> wie?
 		
 		if(bestMove != null)
 			return bestMove;
