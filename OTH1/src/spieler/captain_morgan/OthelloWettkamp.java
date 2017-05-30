@@ -17,6 +17,7 @@ public class OthelloWettkamp {
 	
 	/// HATE GIT !!! ///
 	/// I REALLY DO NOW ///
+	///It will get better.///
 
     public static void main(String[] args) {
         /* Es muss ein OthelloArena-Objekt erzeugt
