@@ -21,12 +21,16 @@ public class GameTree {
 		root = new Node();
 		root.tmpFeld = feld;
 		root.suchTiefe = suchTiefe;
-		
-//		root.possibleMoves = root.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
+		root.isMax = true;
+		root.parent = null;
+		root.possibleMoves = root.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
 		
 		for (Zug z : root.possibleMoves) {
-			root.addChild(z);
+			root.addChild(this.root, z);
 		}
+		
+System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children.size());
+
 	}
 	
 	class Node {
@@ -35,8 +39,7 @@ public class GameTree {
 		int suchTiefe;
 		boolean isMax = true;
 		Zug zug = null;
-		
-		Node parent = null;
+		Node parent;
 		
 		int alpha, beta, value;			// minimax / alpha beta
 		
@@ -50,28 +53,43 @@ public class GameTree {
 			
 		}
 		
-		public void addChild (Zug z) {
+		public void addChild (Node papa, Zug z) {
 			
 			Node n = new Node();
-			n.parent = this;
-			n.isMax = !parent.isMax;
-			n.suchTiefe = parent.suchTiefe - 1;
-			n.tmpFeld = parent.tmpFeld;
+			n.parent = papa;
+			n.isMax = !papa.isMax;
+			n.suchTiefe = papa.suchTiefe - 1;
+			n.tmpFeld = papa.tmpFeld;
 			n.zug = z;
-			
+
+			// setze temporaeren Zug, drehe das Noetige um und hole neue moegliche Zuege  (-> ANDERE Farbe!)...
 			if (n.isMax) {
 				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor);
 				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
+				n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
 			}
+			
 			else {
 				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.opponentColor);
 				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
+				n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);
 			}
 			
-			this.children.add(n);
+			if (suchTiefe <= 0)
+				return;
 			
+			this.children.add(n);
+
+System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
+
+			// REKURSION -> kann das so funktionieren??
+			for (Node childNode : n.children)
+				for (Zug zug : childNode.possibleMoves)
+					childNode.addChild(childNode, zug);
 		}
 	}
+	
+	// hier noch die Bewertungsfunktion versklaven!
 	public Zug getBestMove() {
 		
 		if(bestMove != null)

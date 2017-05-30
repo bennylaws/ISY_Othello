@@ -55,7 +55,7 @@ public class Spieler implements OthelloSpieler {
 
         Feld feldCopy = feld.returnCopy();
         GameTree gt = new GameTree();
-        gt.addRoot(feldCopy, 9);
+        gt.addRoot(feldCopy, suchTiefe);
         ownMove = gt.getBestMove();
         
         /////////////////////////////////////////////////
