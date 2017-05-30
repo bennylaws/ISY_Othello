@@ -81,7 +81,7 @@ class Feld {
     	
     	for (int row = 0; row < Feld.ROWMAX; row++)         // Durchlaufe komplettes Spielfeld und teste auf validen Zug
             for (int col = 0; col < Feld.COLMAX; col++)
-                if (Test.isValid(row, col, activePlayingColor, opponentColor))
+                if (Test.isValid(this, row, col, activePlayingColor, opponentColor))
                     returnList.add(new Zug(row, col));   // fuege alle gefundenen validen Zuege der Liste hinzu	
     	
     	return returnList;

@@ -13,17 +13,65 @@ import spieler.Zug;
 public class GameTree {
 	
 	Node root;
-	//TODO: Getter und Setter für Root?
-	
 	Zug bestMove = null;
-	 
-	public GameTree(Feld gameField, int HalbZuege) {
-		System.out.println("test: st = " + HalbZuege);
+	
+	// root node und seine children werden erzeugt
+	public void addRoot(Feld feld, int suchTiefe) {
+		
 		root = new Node();
-		root.tmpFeld = gameField;
-		root.HalbZuege = HalbZuege;
+		root.tmpFeld = feld;
+		root.suchTiefe = suchTiefe;
+		
+//		root.possibleMoves = root.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
+		
+		for (Zug z : root.possibleMoves) {
+			root.addChild(z);
+		}
 	}
 	
+	class Node {
+		
+		Feld tmpFeld;
+		int suchTiefe;
+		boolean isMax = true;
+		Zug zug = null;
+		
+		Node parent = null;
+		
+		int alpha, beta, value;			// minimax / alpha beta
+		
+		ArrayList<Zug> possibleMoves;
+		ArrayList<Node> children;
+		
+		public Node () {				// im Konstruktor nur die ArrayLists erzeugen
+			
+			possibleMoves = new ArrayList<>();
+			children = new ArrayList<>();
+			
+		}
+		
+		public void addChild (Zug z) {
+			
+			Node n = new Node();
+			n.parent = this;
+			n.isMax = !parent.isMax;
+			n.suchTiefe = parent.suchTiefe - 1;
+			n.tmpFeld = parent.tmpFeld;
+			n.zug = z;
+			
+			if (n.isMax) {
+				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor);
+				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
+			}
+			else {
+				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.opponentColor);
+				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
+			}
+			
+			this.children.add(n);
+			
+		}
+	}
 	public Zug getBestMove() {
 		
 		if(bestMove != null)
@@ -31,97 +79,5 @@ public class GameTree {
 		
 		else
 			return new Zug (-1,-1);		
-	}
-	
-	class Node {
-		
-		Feld tmpFeld;
-		Zug moveToTest;
-		ArrayList<Zug> allPossible;
-		ArrayList<Node> children;
-		
-		int activePlayerColor, opponentColor;
-		
-		// Soll angeben, auf welcher Ebene wir uns befinden und ob wir minimieren oder maximieren;
-		// wird getoggled bei Erstellung von Kind-Nodes
-		boolean isMax;
-		
-		int HalbZuege;		// counter (Abbruch in Rekursion)
-		int value;
-		
-		int alpha;
-		int beta;
-		
-		Node parent;
-		
-		// int traversionstiefe;
-		
-		// Allgemeiner Konstruktor, der nur zum Erstellen des Root genutzt wird
-		public Node(){
-			
-			isMax = true;
-			parent = null;
-			
-			tmpFeld = new Feld();
-			
-			allPossible = new ArrayList<>();
-			children = new ArrayList<>();
-			
-			allPossible = tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);	// fuer eigene Farbe (root = MAX Knoten)
-			
-			for (Zug z : allPossible)
-				addChild(this.tmpFeld, z, this.HalbZuege);
-			
-			// erhält Kopie des Originalbrettes
-			
-		}
-		
-		//Konstruktor für die anderen Knoten, die in der Frag Min/Max alternieren.
-		public Node(Node parentNode, Zug moveToTest, int HalbZuege){
-			
-			this.parent = parentNode;
-			this.isMax = !parent.isMax;
-			
-			tmpFeld = parent.tmpFeld;
-			
-			allPossible = new ArrayList<>();
-			children = new ArrayList<>();
-			
-			if (this.isMax) {
-				tmpFeld.setField(moveToTest.getZeile(), moveToTest.getSpalte(), Spieler.ownColor);
-				Test.turnAround(moveToTest.getZeile(), moveToTest.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
-			}
-			
-			else {
-				tmpFeld.setField(moveToTest.getZeile(), moveToTest.getSpalte(), Spieler.opponentColor);
-				Test.turnAround(moveToTest.getZeile(), moveToTest.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
-			}
-			
-			if (this.isMax)
-				allPossible = tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);	// fuer eigene Farbe (root = MAX Knoten)
-			
-			else
-				allPossible = tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);	// MIN == Gegner
-			
-			for (Zug z : allPossible)
-				addChild(this.tmpFeld, z, parent.HalbZuege -1);
-			
-			//erhält Brett von parent (KEINE Kopie)
-			
-		}
-		
-		int count = 0;
-		
-		public void addChild(Feld f, Zug z, int HalbZuege) {
-
-// TESTAUSGABE
-System.out.println("count: " + count++ + " HZ: " + HalbZuege);
-			
-			if (HalbZuege <= 0)
-				return;
-			
-			this.children.add(new Node(this, z, HalbZuege));
-			
-		}
 	}
 }

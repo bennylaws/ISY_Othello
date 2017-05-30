@@ -26,7 +26,7 @@ public class Test {
      * @param opponentColor
      * @return TRUE falls valides Feld gefunden, sonst false
      */
-    public static boolean isValid(int realRow, int realCol, int ownColor, int opponentColor) {
+    public static boolean isValid(Feld feld, int realRow, int realCol, int ownColor, int opponentColor) {
 
         boolean isValid = false;
         int tmpRow, tmpCol;
@@ -99,7 +99,7 @@ public class Test {
      * @param ownColor
      * @param opponentColor 
      */
-    public static void turnAround(int realRow, int realCol, int ownColor, int opponentColor) {
+    public static void turnAround(Feld feld, int realRow, int realCol, int ownColor, int opponentColor) {
 
         int tmpRow, tmpCol;
         int rowDif, colDif;

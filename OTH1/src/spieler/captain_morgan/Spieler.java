@@ -42,7 +42,7 @@ public class Spieler implements OthelloSpieler {
             feld.setField(lastMove.getZeile(), lastMove.getSpalte(), opponentColor);
             
             // Gegner Chips umdrehen - Farb-Reihenfolge bestimmt in dieser Fu. fuer wen umgedreht wird
-            Test.turnAround(lastMove.getZeile(), lastMove.getSpalte(), opponentColor, ownColor);
+            Test.turnAround(feld, lastMove.getZeile(), lastMove.getSpalte(), opponentColor, ownColor);
         }
         
 //        Print.out();        // Feld nach Gegner move ausdrucken
@@ -54,7 +54,8 @@ public class Spieler implements OthelloSpieler {
         /////////////////////////////////////////////////
 
         Feld feldCopy = feld.returnCopy();
-        GameTree gt = new GameTree(feldCopy, suchTiefe);
+        GameTree gt = new GameTree();
+        gt.addRoot(feldCopy, 9);
         ownMove = gt.getBestMove();
         
         /////////////////////////////////////////////////
@@ -62,7 +63,7 @@ public class Spieler implements OthelloSpieler {
         // hier eigene Chips umdrehen
         if (ownMove.getSpalte() != -1) {                                                        // wenn nicht -1 --> wenn nicht gepasst wird
             feld.setField(ownMove.getZeile(), ownMove.getSpalte(), ownColor);                   // dann wird tatsächlich unser move aufs Feld geschrieben
-            Test.turnAround(ownMove.getZeile(), ownMove.getSpalte(), ownColor, opponentColor);  // und dann werden Steine zu unseren Gunsten gedreht
+            Test.turnAround(feld, ownMove.getZeile(), ownMove.getSpalte(), ownColor, opponentColor);  // und dann werden Steine zu unseren Gunsten gedreht
             
         }
 //        Print.out();        // Feld nach eigenem move ausdrucken
@@ -78,11 +79,11 @@ public class Spieler implements OthelloSpieler {
     
         // setze Farben
         if (ownColor.equals(Farbe.SCHWARZ)) {
-            this.ownColor = Feld.BLACK;
+            Spieler.ownColor = Feld.BLACK;
             opponentColor = Feld.WHITE;
         }
         else {
-            this.ownColor = Feld.WHITE;
+            Spieler.ownColor = Feld.WHITE;
             opponentColor = Feld.BLACK;
         }
     }
