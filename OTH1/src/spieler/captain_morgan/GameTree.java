@@ -1,5 +1,7 @@
 package spieler.captain_morgan;
 
+import spieler.Zug;
+
 /**
  * Zuständig für Erstellen und Traversieren des GameTrees.
  * Nodes sollten Value, Alpha, Beta, Traversionstiefe, Boardstate und Arraylist an Kind-Nodes enthalten.
@@ -8,9 +10,26 @@ package spieler.captain_morgan;
 
 public class GameTree {
 	
+	 Node root;
+	//TODO: Getter und Setter für Root?
+	
+	Zug bestMove = null;
+	 
+	public GameTree(Feld gameField){
+		root = new Node();
+		root.tmpFeld = gameField;
+	};
+	
+	public Zug getBestMove(){
+		if(bestMove != null)
+			return bestMove;
+		else return new Zug (-1,-1);
+	}
+	
 	class Node{
 		
 		Feld tmpFeld;
+		Zug moveToTest;
 		
 		int alpha;
 		int beta;
@@ -27,16 +46,18 @@ public class GameTree {
 		public Node(){
 			isMax = true;
 			parent = null;
+			//erhält aktuelles Brett
 		}
 		
 		//Konstruktor für die anderen Knoten, die in der Frag Min/Max alternieren.
 		public Node(Node parentNode){
 			this.parent = parentNode;
 			this.isMax = !parent.isMax; 
-		}
-		
-		
-		
+			//erhält eigenes Feld
+		}	
 	}
+	
+	
+	
 
 }
