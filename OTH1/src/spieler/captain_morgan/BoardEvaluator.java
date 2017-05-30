@@ -19,5 +19,35 @@ package spieler.captain_morgan;
  * 
  */
 public class BoardEvaluator {
+	
+	static final int [][] evaluationMatrix = new int[][]{
+		{50, -1, 3, 3, 3, 3, -1, 50},
+		{-1, -5, 2, 2, 2, 2, -5, -1},
+		{3, 2, 2, 2, 2, 2, 2, 3},
+		{3, 2, 2, 0, 0, 2, 2, 3},
+		{3, 2, 2, 0, 0, 2, 2, 3},
+		{3, 2, 2, 2, 2, 2, 2, 3},
+		{-1, -5, 2, 2, 2, 2, -5, -1},
+		{50, -1, 3, 3, 3, 3, -1, 50}
+	};
+	
+	static public int getBoardValue(Feld boardToEval,int testColor, int oppColor){
+		
+		int ret = 0;
+		for(int i = 0; i < 8 ; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				if(boardToEval.getField(i, j) == testColor)
+				{
+					ret += evaluationMatrix[i][j];
+				}
+				else if(boardToEval.getField(i, j) == oppColor)
+					ret -= evaluationMatrix[i][j];
+			}
+		}
+		
+		return ret;
+	};
 
 }
