@@ -29,7 +29,7 @@ public class Spieler implements OthelloSpieler {
     	this.suchTiefe = 9;
     }
     
-    public Spieler(int Suchtiefe) {
+    public Spieler(int suchTiefe) {
     	this.suchTiefe = suchTiefe;
     }
     
@@ -57,7 +57,7 @@ public class Spieler implements OthelloSpieler {
         GameTree gt = new GameTree();
         gt.addRoot(feldCopy, suchTiefe);
         ownMove = gt.getBestMove();
-        
+        System.out.println("Zug: (" + ownMove.getZeile() + ", " + ownMove.getSpalte() + ")");
         /////////////////////////////////////////////////
         
         // hier eigene Chips umdrehen

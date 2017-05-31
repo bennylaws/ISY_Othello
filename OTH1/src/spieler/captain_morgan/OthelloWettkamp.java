@@ -7,6 +7,7 @@ package spieler.captain_morgan;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import spieler.OthelloSpieler;
 
 /**
@@ -31,7 +32,7 @@ public class OthelloWettkamp {
     
         //Die Spieler
 //    spieler.add(new spieler.Referenzspieler( )); //Suchtiefe Default
-        spieler.add(new spieler.captain_morgan.Spieler());
+        spieler.add(new spieler.captain_morgan.Spieler(5));
         spieler.add(new spieler.Referenzspieler (1)); //Suchtiefe 9
 
         new rahmen.OthelloArena (150,   //Gesamtbedenkzeit in Sekunden 

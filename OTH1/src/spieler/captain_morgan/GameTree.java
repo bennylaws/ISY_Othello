@@ -28,7 +28,6 @@ public class GameTree {
 		for (Zug z : root.possibleMoves) {
 			root.addChild(this.root, z);
 		}
-		System.out.println(root.value);
 		
 //System.out.println("root: st: " + root.suchTiefe + " anz. ki.: " + root.children.size());
 
@@ -64,7 +63,7 @@ public class GameTree {
 			n.zug = z;
 
 			// setze temporaeren Zug, drehe das Noetige um und hole neue moegliche Zuege  (-> ANDERE Farbe!)...
-			if (n.isMax) {
+			if (isMax) {
 				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor);
 				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
 				if(n.suchTiefe > 0)
@@ -85,12 +84,12 @@ public class GameTree {
 			
 			this.children.add(n);
 
-System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
+System.out.println("st: " + suchTiefe + " anz. ki.: " + children.size() + " poss. mv.: " + possibleMoves.size());
+System.out.println("n.st: " + n.suchTiefe + " n.anz. ki.: " + n.children.size() + " n.poss. mv.: " + n.possibleMoves.size());
 
 			// REKURSION
-			for (Node childNode : n.children)
-				for (Zug zug : childNode.possibleMoves)
-					childNode.addChild(childNode, zug);
+				for (Zug zug : n.possibleMoves)
+					addChild(n, zug);
 
 			//Elternknoten möchte den kleinsten Wert, wenn ich Max bin
 			if (parent != null) {
