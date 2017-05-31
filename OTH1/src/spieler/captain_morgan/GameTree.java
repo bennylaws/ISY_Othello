@@ -63,19 +63,21 @@ public class GameTree {
 			n.zug = z;
 
 			// setze temporaeren Zug, drehe das Noetige um und hole neue moegliche Zuege  (-> ANDERE Farbe!)...
-			if (isMax) {
-				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor);
-				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
+			if (n.parent.isMax) {
+				System.out.println(n.tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor));
+				Test.turnAround(n.tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
 				if(n.suchTiefe > 0)
 					n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);
 			}
 			
 			else {
-				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.opponentColor);
-				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
+				System.out.println(n.tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.opponentColor));
+				Test.turnAround(n.tmpFeld, z.getZeile(), z.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
 				if(n.suchTiefe > 0)
 					n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
 			}
+			
+Print.out(tmpFeld);
 						
 			if (suchTiefe <= 0) {
 				parent.value = BoardEvaluator.getBoardValue(n.tmpFeld, Spieler.ownColor, Spieler.opponentColor);
@@ -84,7 +86,7 @@ public class GameTree {
 			
 			this.children.add(n);
 
-System.out.println("st: " + suchTiefe + " anz. ki.: " + children.size() + " poss. mv.: " + possibleMoves.size());
+System.out.println("st: " + this.suchTiefe + " anz. ki.: " + this.children.size() + " poss. mv.: " + this.possibleMoves.size());
 System.out.println("n.st: " + n.suchTiefe + " n.anz. ki.: " + n.children.size() + " n.poss. mv.: " + n.possibleMoves.size());
 
 			// REKURSION

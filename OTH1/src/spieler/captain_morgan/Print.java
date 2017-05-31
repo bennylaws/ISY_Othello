@@ -11,7 +11,7 @@ package spieler.captain_morgan;
  */
 public class Print {
 
-    static void out() {
+    static void out(Feld f) {
 
         System.out.println();
         System.out.println("Aktuelle Belegung:\n");
@@ -26,10 +26,10 @@ public class Print {
         for (int row = 0; row < Feld.ROWMAX; row++) {
             System.out.print(row + 1 + "|");                                // Zahlen links und linken Rand "zeichnen"
             for (int col = 0; col < Feld.COLMAX; col++) {
-                if (Spieler.feld.getField(row, col) == Feld.BLACK) {
+                if (f.getField(row, col) == Feld.BLACK) {
                     System.out.print(" X ");
                 }
-                else if (Spieler.feld.getField(row, col) == Feld.WHITE) {
+                else if (f.getField(row, col) == Feld.WHITE) {
                     System.out.print(" O ");
                 }
                 else {
