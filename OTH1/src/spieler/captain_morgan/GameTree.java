@@ -13,7 +13,6 @@ import spieler.Zug;
 public class GameTree {
 	
 	Node root;
-	Zug bestMove = null;
 	
 	// root node und seine children werden erzeugt
 	public void addRoot(Feld feld, int suchTiefe) {
@@ -24,6 +23,7 @@ public class GameTree {
 		root.isMax = true;
 		root.parent = null;
 		root.possibleMoves = root.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
+		root.zug = null;
 		
 		for (Zug z : root.possibleMoves) {
 			root.addChild(this.root, z);
@@ -109,13 +109,12 @@ System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
 		}
 	}
 	
-	// hier noch die Bewertungsfunktion versklaven!
 	public Zug getBestMove() {
 		
 		// Baum traversieren und Ergebnisse bewerten lassen, dann im Baum hochreichen --> wie?
 		
-		if(bestMove != null)
-			return bestMove;
+		if(root.zug != null)
+			return root.zug;
 		
 		else
 			return new Zug (-1,-1);		
