@@ -92,13 +92,19 @@ System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
 				for (Zug zug : childNode.possibleMoves)
 					childNode.addChild(childNode, zug);
 
+			//Elternknoten möchte den kleinsten Wert, wenn ich Max bin
 			if (parent != null) {
-				if (this.isMax && parent.value < this.value)
+				if (this.isMax && parent.value > this.value){
 					parent.value = this.value;
+				}
 				
-				else if (!this.isMax && parent.value > this.value)
+				//Elternknoten möchte den größten Wert, wenn ich Min bin
+				else if (!this.isMax && parent.value < this.value){
 					parent.value = this.value;
-				
+					//Wenn Elternknoten Root ist, dann übergib den eigenen Zug, FALLS ich einen Extremwert übergeben habe.
+					if(parent.parent == null)
+						parent.zug = this.zug;
+				}
 			}
 		}
 	}
