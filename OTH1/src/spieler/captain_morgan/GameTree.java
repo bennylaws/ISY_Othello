@@ -67,15 +67,17 @@ public class GameTree {
 			if (n.isMax) {
 				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.ownColor);
 				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.ownColor, Spieler.opponentColor);
-				n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
+				if(n.suchTiefe > 0)
+					n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);
 			}
 			
 			else {
 				tmpFeld.setField(z.getZeile(), z.getSpalte(), Spieler.opponentColor);
 				Test.turnAround(tmpFeld, z.getZeile(), z.getSpalte(), Spieler.opponentColor, Spieler.ownColor);
-				n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.opponentColor, Spieler.ownColor);
+				if(n.suchTiefe > 0)
+					n.possibleMoves = n.tmpFeld.getAllPossibleMoves(Spieler.ownColor, Spieler.opponentColor);
 			}
-			
+						
 			if (suchTiefe <= 0) {
 				parent.value = BoardEvaluator.getBoardValue(n.tmpFeld, Spieler.ownColor, Spieler.opponentColor);
 				return;
@@ -85,17 +87,18 @@ public class GameTree {
 
 System.out.println("n: st: " + n.suchTiefe + " anz. ki.: " + n.children.size());
 
-			// REKURSION -> kann das so funktionieren??
+			// REKURSION
 			for (Node childNode : n.children)
 				for (Zug zug : childNode.possibleMoves)
 					childNode.addChild(childNode, zug);
-// HIER FEHLER fuck u rekursion			
+
 			if (parent != null) {
-				if (n.isMax && parent.value < n.value)
-					parent.value = n.value;
+				if (this.isMax && parent.value < this.value)
+					parent.value = this.value;
 				
-				else if (!n.isMax && parent.value > n.value)
-					parent.value = n.value;
+				else if (!this.isMax && parent.value > this.value)
+					parent.value = this.value;
+				
 			}
 		}
 	}
