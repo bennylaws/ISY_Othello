@@ -33,7 +33,7 @@ public class OthelloWettkamp {
         //Die Spieler
 //    spieler.add(new spieler.Referenzspieler( )); //Suchtiefe Default
         spieler.add(new spieler.captain_morgan.Spieler(9));
-        spieler.add(new spieler.Referenzspieler (1)); //Suchtiefe 9
+        spieler.add(new spieler.Referenzspieler (8)); //Suchtiefe 9
 
         new rahmen.OthelloArena (150,   //Gesamtbedenkzeit in Sekunden 
                 spieler,                //Spielerliste 

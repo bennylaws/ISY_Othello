@@ -8,19 +8,17 @@ public class Node {
 
 	Node parent;
 	ArrayList<Node> children;
-	ArrayList<Zug> possibleMoves;
 		
-	boolean isFoe = false;
+	boolean isFoe;
 	
 	int alpha = Integer.MIN_VALUE;
 	int beta = Integer.MAX_VALUE;
-	int value = 0;
+	int value;
 	
 	Zug move;
 	
-	
 	public Node() {
 		children = new ArrayList<>();
-		possibleMoves = new ArrayList<>();
+		value = Integer.MIN_VALUE;
 	}
 }

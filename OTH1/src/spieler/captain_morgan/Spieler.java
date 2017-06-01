@@ -51,27 +51,24 @@ public class Spieler implements OthelloSpieler {
         
         /////////////////////////////////////////////////
  
-        Zug ownMove;
+        Zug ownMove = null;
+        int tmpVal;
         
         Feld feldCopy = feld.returnCopy();
         
         Node root = new Node();
-        root.isFoe = false;
         root.parent = null;
         BetterGameTree.buildTree(suchTiefe, root, false, feldCopy);
         
-System.out.println("ST: " + suchTiefe);    
-
-        Node blubb = new Node();
-        blubb = root.children.get(0);
+        tmpVal = Integer.MIN_VALUE;
         
         for (Node n : root.children)
-        	if (n.value > blubb.value)
-        	blubb = n;
-        
-        ownMove = blubb.move;
-        
-        System.out.println("Zug: (" + ownMove.getZeile() + ", " + ownMove.getSpalte() + ")");
+        	if (n.value > tmpVal) {
+        		tmpVal = n.value;
+        		ownMove = n.move;
+        	}
+        		
+//        System.out.println("Zug: (" + ownMove.getZeile() + ", " + ownMove.getSpalte() + ")");
         /////////////////////////////////////////////////
         
         // hier eigene Chips umdrehen

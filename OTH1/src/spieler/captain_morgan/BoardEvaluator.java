@@ -21,25 +21,25 @@ package spieler.captain_morgan;
 public class BoardEvaluator {
 	
 	static final int [][] evaluationMatrix = new int[][]{
-		{50, -1, 3, 3, 3, 3, -1, 50},
-		{-1, -5, 2, 2, 2, 2, -5, -1},
-		{3, 2, 2, 2, 2, 2, 2, 3},
-		{3, 2, 2, 0, 0, 2, 2, 3},
-		{3, 2, 2, 0, 0, 2, 2, 3},
-		{3, 2, 2, 2, 2, 2, 2, 3},
-		{-1, -5, 2, 2, 2, 2, -5, -1},
-		{50, -1, 3, 3, 3, 3, -1, 50}
+		{50, -1,  5, 2, 2, 5, -1, 50},
+		{-1, -10, 1, 1, 1, 1, -10,-1},
+		{5,    1, 1, 1, 1, 1,  1,  5},
+		{2,    1, 1, 0, 0, 1,  1,  2},
+		{2,    1, 1, 0, 0, 1,  1,  2},
+		{5,    1, 1, 1, 1, 1,  1,  5},
+		{-1, -10, 1, 1, 1, 1, -10,-1},
+		{50,  -1, 5, 2, 2, 5, -1, 50},
 	};
 	
 	//Gibt zunächst die Summe aller belegten Felder in Abhängigkeit von der Steinfarbe zurück
 	//Hinzuzufügen ist noch eine Einschätzung der Flexibilität der Boardposition anhand der möglichen Züge
 	//des Gegners und des aktiven Spielers
-	static public int getBoardValue(Feld boardToEval,int testColor, int oppColor){
+	static public int getBoardValue(Feld boardToEval,int ownColor, int oppColor){
 		
 		int ret = 0;
 		for(int i = 0; i < 8 ; i++)
 			for(int j = 0; j < 8; j++)
-				if (boardToEval.getField(i, j) == testColor)
+				if (boardToEval.getField(i, j) == ownColor)
 					ret += evaluationMatrix[i][j];
 
 				else if (boardToEval.getField(i, j) == oppColor)

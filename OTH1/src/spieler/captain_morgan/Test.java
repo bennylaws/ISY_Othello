@@ -57,8 +57,8 @@ public class Test {
                     tmpCol = realCol;
 
                     // aktuelles Feld leer && nächstes Feld in Richtung X == Gegner-Farbe?
-                    if (Spieler.feld.getField(tmpRow, tmpCol) == Feld.EMPTY
-                            && Spieler.feld.getField(tmpRow + rowDif, tmpCol + colDif) == opponentColor) {
+                    if (feld.getField(tmpRow, tmpCol) == Feld.EMPTY
+                            && feld.getField(tmpRow + rowDif, tmpCol + colDif) == opponentColor) {
                         
                         while (tmpRow + rowDif >= 0 && tmpRow + rowDif < Feld.ROWMAX
                                 && tmpCol + colDif >= 0 && tmpCol + colDif < Feld.COLMAX) {
@@ -68,16 +68,16 @@ public class Test {
                             tmpRow += rowDif;
                             tmpCol += colDif;
 
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == opponentColor) {   // Gegnerfarbe? --> alles ok, continue;
+                            if (feld.getField(tmpRow, tmpCol) == opponentColor) {   // Gegnerfarbe? --> alles ok, continue;
                                 continue;
                             }
 
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == Feld.EMPTY) {      // LEER? --> Abbruch fuer DIESE RICHTUNG
+                            if (feld.getField(tmpRow, tmpCol) == Feld.EMPTY) {      // LEER? --> Abbruch fuer DIESE RICHTUNG
                                 break;
                             }
 
                             // setze isValid true bei gültigem Feld
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == ownColor) {        // EIGENE Farbe? --> setze isValid = true;
+                            if (feld.getField(tmpRow, tmpCol) == ownColor) {        // EIGENE Farbe? --> setze isValid = true;
                                 isValid = true;
                             }
                         }
@@ -124,7 +124,7 @@ public class Test {
                     tmpCol = realCol;
 
                     // nächstes Feld in Richtung X == Gegner-Farbe?
-                    if (Spieler.feld.getField(realRow + rowDif, realCol + colDif) == opponentColor) {
+                    if (feld.getField(realRow + rowDif, realCol + colDif) == opponentColor) {
 
                         while (!pathCompleted
                                 && tmpRow + rowDif >= 0 && tmpRow + rowDif < Feld.ROWMAX
@@ -133,15 +133,15 @@ public class Test {
                             tmpRow += rowDif;
                             tmpCol += colDif;
 
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == opponentColor) {
+                            if (feld.getField(tmpRow, tmpCol) == opponentColor) {
                                 continue;
                             }
 
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == Feld.EMPTY) {
+                            if (feld.getField(tmpRow, tmpCol) == Feld.EMPTY) {
                                 break;
                             }
 
-                            if (Spieler.feld.getField(tmpRow, tmpCol) == ownColor) {
+                            if (feld.getField(tmpRow, tmpCol) == ownColor) {
 
                                 while (tmpRow - rowDif >= 0 && tmpRow - rowDif < Feld.ROWMAX
                                         && tmpCol - colDif >= 0 && tmpCol - colDif < Feld.COLMAX) {
@@ -151,13 +151,13 @@ public class Test {
                                     tmpCol -= colDif;
                                     
                                     // man verlasse die Schleife, wenn man wieder am Anfang (eigene Farbe) steht
-                                    if (Spieler.feld.getField(tmpRow, tmpCol) == ownColor) {
+                                    if (feld.getField(tmpRow, tmpCol) == ownColor) {
                                         pathCompleted = true;   // Ein Mann setzt Abbruchbedingung :D
                                         break;
                                     }
 
                                     // Eine Funktion dreht Steine um (set own color)
-                                    Spieler.feld.setField(tmpRow, tmpCol, ownColor);
+                                    feld.setField(tmpRow, tmpCol, ownColor);
                                 }
                             }
                         }
