@@ -45,18 +45,32 @@ public class Spieler implements OthelloSpieler {
             Test.turnAround(feld, lastMove.getZeile(), lastMove.getSpalte(), opponentColor, ownColor);
         }
         
-//        Print.out();        // Feld nach Gegner move ausdrucken
-        
         // Zug fuer die Rueckgabe an Priemer erstellen
         // (-1, -1) bedeutet "Passen" --> wird returned, falls kein gültiges Feld gefunden wird
-        Zug ownMove;
+       
         
         /////////////////////////////////////////////////
-
+ 
+        Zug ownMove;
+        
         Feld feldCopy = feld.returnCopy();
-        GameTree gt = new GameTree();
-        gt.addRoot(feldCopy, suchTiefe);
-        ownMove = gt.getBestMove();
+        
+        Node root = new Node();
+        root.isFoe = false;
+        root.parent = null;
+        BetterGameTree.buildTree(suchTiefe, root, false, feldCopy);
+        
+System.out.println("ST: " + suchTiefe);    
+
+        Node blubb = new Node();
+        blubb = root.children.get(0);
+        
+        for (Node n : root.children)
+        	if (n.value > blubb.value)
+        	blubb = n;
+        
+        ownMove = blubb.move;
+        
         System.out.println("Zug: (" + ownMove.getZeile() + ", " + ownMove.getSpalte() + ")");
         /////////////////////////////////////////////////
         

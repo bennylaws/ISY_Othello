@@ -46,13 +46,10 @@ class Feld {
      * @param color
      * @return TRUE falls Feld gueltig, sonst FALSE
      */
-    public boolean setField(int row, int col, int color) {
+    public void setField(int row, int col, int color) {
 
-        if (row >= 0 && row < ROWMAX && col >= 0 && col < COLMAX && color >= -1 && color < 2) {
+        if (row >= 0 && row < ROWMAX && col >= 0 && col < COLMAX && color >= -1 && color < 2)
             arr[row][col] = color;
-            return true;
-        }
-        return false;
     }
     
     /**
